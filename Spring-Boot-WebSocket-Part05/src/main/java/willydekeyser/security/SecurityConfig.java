@@ -20,7 +20,7 @@ public class SecurityConfig {
         http
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/").permitAll()
+                        //.requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

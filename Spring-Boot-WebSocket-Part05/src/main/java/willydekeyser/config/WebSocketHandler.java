@@ -53,13 +53,13 @@ public class WebSocketHandler extends TextWebSocketHandler {
         
         String htmlFragment = """
             <div id="message" class="message-box" hx-swap-oob="beforeend">
-                <p>Message from sessionId: %s</p>
+                <p>Message from User : %s & SessionId: %s</p>
                 <p>%s</p>
             </div>
-            """.formatted(session.getId(), textmessage);
+            """.formatted(session.getPrincipal().getName(), session.getId(), textmessage);
 
         for (WebSocketSession activeSession : sessions) {
-            if (activeSession.getId().equals(userid)) {
+            if (activeSession.getPrincipal().getName().equals(userid)) {
                 try {
                 	activeSession.sendMessage(new TextMessage(htmlFragment));
                 } catch (IOException e) {
@@ -71,10 +71,11 @@ public class WebSocketHandler extends TextWebSocketHandler {
     
     private String CreateString(WebSocketSession activeSession) {
     	StringBuilder text = new StringBuilder();
+    	text.append("<p>User Name: " +  activeSession.getPrincipal().getName() + "</p>");
         text.append("<p>Connected Users:</p>");
         sessions.forEach(x -> 
         	{if (!x.getId().equals(activeSession.getId())) {
-        		text.append("<p>" + x.getId() + "</p>");
+        		text.append("<p>" + x.getPrincipal().getName() + "</p>");
 			}});      
     	return text.toString();
     }
