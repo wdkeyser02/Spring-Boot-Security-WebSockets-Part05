@@ -16,18 +16,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests((authorize) -> authorize
-                        //.requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
     }
 
     @Bean
-    public UserDetailsService users() {
+    UserDetailsService users() {
         UserDetails user1 = User.builder()
                 .username("user1")
                 .password(passwordEncoder().encode("password"))
@@ -47,7 +46,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
