@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Spring Boot Tutorials</title>
+	<script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/htmx.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0/dist/ext/hx-ws.min.js"></script>
+	<style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 20px; text-align: center;}
+        .container { max-width: 500px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .message-box { padding: 15px; border: 1px solid #e1e8ed; border-radius: 6px; text-align: center; }
+        .field { width: 250px; height: 30px; padding: 5px; display:inline-block; margin: 10px;}
+        .label { width: 150px; height: 30px; padding: 5px; display:inline-block; margin: 10px;}
+    </style>
+</head>
+<body>
+<h1>Spring Boot Tutorials</h1>
+<h2>WebSockets!</h2>
+	<div id="button">
+		<button id="connect">Connect</button>
+		<br />
+	</div>
+
+	<div hx-ws:connect="/message" hx-trigger="click from:#connect" hx-target="#button" hx-swap="innerHTML" hx-swap-oob="true">
+
+		<div>
+			<form hx-ws:send>
+				<label for="userid" class="label">UserId: </label> <input type="text"
+					name="userid" placeholder="Type a UserId..." required class="field" /><br />
+				<label for="message" class="label">Message: </label> <input type="text"
+					name="message" placeholder="Type a message..." required
+					class="field" /><br />
+				<button type="submit">Click to send Message!</button>
+			</form>
+			<div id="message" class="message-box">
+				<h2>Message</h2>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
